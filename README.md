@@ -1,5 +1,7 @@
 This is not a test line!
 
+This is not a second test line!
+
 # Flushing Tech Website
 
 Welcome to the Flushing Tech website repository! This repo is dedicated to building a new website for the Flushing Tech Meetup Group. The group currently has a website ([flushingtech.org](https://flushingtech.org)) built in Svelte, but we are transitioning to Next.js and React. Additionally, we now have a designer and PM on the team and would like to apply a more cross-functional approach to build a more visually appealing and user-friendly website.
