@@ -12,12 +12,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # fetch all history
+          fetch-tags: true
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Find child PRs
         run: |
           echo "Parent branch: ${{ github.event.pull_request.head.ref }}"
-          # Example: you can use gh CLI to list PRs whose base == parent branch
-          gh pr list --base ${{ github.event.pull_request.head.ref }} --json number,headRefName > children.json
+          gh pr list \
+            --base ${{ github.event.pull_request.head.ref }} \
+            --json number,headRefName > children.json
+          cat children.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -25,8 +33,10 @@ jobs:
         run: |
           CHILD_BRANCHES=$(jq -r '.[].headRefName' children.json)
           for branch in $CHILD_BRANCHES; do
-            echo "Rebasing $branch onto main..."
+            echo "=== Rebasing $branch onto main ==="
             git fetch origin main
+            # make sure the branch exists locally
+            git fetch origin $branch:$branch
             git checkout $branch
             git rebase origin/main
             git push --force-with-lease origin $branch
