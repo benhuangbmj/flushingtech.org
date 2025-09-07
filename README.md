@@ -1,4 +1,4 @@
-This is the last!
+Let's restart! It's a beautiful Sunday!
 
 # Flushing Tech Website
 
@@ -6,12 +6,14 @@ Welcome to the Flushing Tech website repository! This repo is dedicated to build
 
 ## Table of Contents
 
-1. [Background on the Group](#background-on-the-group)
-2. [About the Project](#about-the-project)
-3. [Future Features](#future-features)
-4. [Installation](#installation)
-5. [Contributing](#contributing)
-6. [Contact](#contact)
+- [Flushing Tech Website](#flushing-tech-website)
+  - [Table of Contents](#table-of-contents)
+  - [Background on the Group](#background-on-the-group)
+  - [About the Project](#about-the-project)
+    - [Future Features](#future-features)
+  - [Installation](#installation)
+  - [Contributing](#contributing)
+  - [Contact](#contact)
 
 
 
