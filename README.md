@@ -1,4 +1,4 @@
-Let's restart! It's a beautiful Sunday!
+Try again!
 
 # Flushing Tech Website
 
