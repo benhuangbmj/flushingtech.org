@@ -44,17 +44,8 @@ jobs:
             git fetch origin main
             git fetch origin $BRANCH:$BRANCH
             git checkout $BRANCH
-
-            if git rebase origin/main; then
-              git push --force-with-lease origin $BRANCH
-              echo "✅ Rebased $BRANCH successfully."
-
-              echo "🔄 Retargeting PR #$NUMBER to base=main"
-              gh pr edit $NUMBER --base main
-            else
-              echo "⚠️ Rebase failed for $BRANCH (PR #$NUMBER). Skipping..."
-              git rebase --abort || true
-            fi
+            git rebase origin/main
+            git push --force-with-lease origin $BRANCH
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
