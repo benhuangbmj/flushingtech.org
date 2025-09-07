@@ -16,7 +16,6 @@ jobs:
       - name: Find child PRs
         run: |
           echo "Parent branch: ${{ github.event.pull_request.head.ref }}"
-          # Get PRs whose base == parent branch
           gh pr list \
             --base "${{ github.event.pull_request.head.ref }}" \
             --json number,headRefName \
@@ -44,8 +43,18 @@ jobs:
             git fetch origin main
             git fetch origin $BRANCH:$BRANCH
             git checkout $BRANCH
-            git rebase origin/main
+
+            # Try rebase with duplicate detection handling
+            if git rebase --reapply-cherry-picks origin/main; then
+              echo "✅ Rebase completed for $BRANCH"
+            else
+              echo "⚠️ Rebase hit a conflict in $BRANCH"
+              git rebase --skip || (git rebase --abort && echo "❌ Could not rebase $BRANCH" && continue)
+            fi
+
             git push --force-with-lease origin $BRANCH
+            echo "🔄 Retargeting PR #$NUMBER to base=main"
+            gh pr edit $NUMBER --base main
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
